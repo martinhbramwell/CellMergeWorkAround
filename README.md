@@ -31,7 +31,7 @@ Usage
 	  -p GOOGLE_PWD, --user_passwd GOOGLE_PWD
 	                        The Google user's password
 	
-You will need to have available the url of the spreadsheet and your Google Auth key for spreadsheets.
+You will need to provide, at least, the url of the spreadsheet and your Google Auth key for spreadsheets.
 
 An example command to execute would be :
 
@@ -51,5 +51,24 @@ You can also execute getSpans like this :
 In which case the Auth key is generated, and used, internally.
 
 The output is a CSV list of cells that have their colspab or rowspan (or both) attributes set to greater than one.
+
+For testing you can use the key "0AhgdNB3-bSxAdDFBQWJ3YTAzd015UFJTZ3FwZlc1TlE" it is "Public to anyone on the web."
+
+For sheet #0 you should get :
+
+	"row", "col", "cols", "rows"
+	"2", "1", "1", "6"
+	"5", "2", "3", "5"
+	"4", "3", "3", "1"
+
+For sheet #2 you should get :
+
+	"row", "col", "cols", "rows"
+	"1", "2", "1", "6"
+	"8", "1", "2", "2"
+	"5", "4", "3", "5"
+
+You can then load these back into your spreadsheet as a new sheet and use it as a reference for the location of merged cells for what ever (static) purpose, you might need.  Obviously you will have to run it before any sheet copying actions in case something has changed since the last time.
+
 
 
