@@ -7,21 +7,21 @@ Usage
 ------
 
 	A tool for getting the row and column spans of a single sheet in a Google
-	Drive Spreadsheet. (Note that, for command line access, Google requires client authentication 
-	*even if* a document is "Public to anyone on the web").'
+	Drive Spreadsheet. (Note that for command line access, Google requires client
+	authentication *even if* a document is "Public to anyone on the web").
 
-    usage = "usage: %prog [options] arg"
-	
 	optional arguments:
 	  -h, --help            show this help message and exit
 	  -t GOOGLE_SERVICE, --service_type GOOGLE_SERVICE
 	                        If you intend to work with something other than a
-	                        spreadsheet you'll need to change this.
+	                        spreadsheet you'll need to change this. (Default :
+	                        'wise')
 	  -k WORKBOOK_KEY, --spreadsheet_key WORKBOOK_KEY
 	                        The key parameter taken from URL of the spreadsheet.
 	                        (Required!)
 	  -s SHEET_ID, --sheet_id SHEET_ID
 	                        The identifier of the single sheet to be accessed.
+	                        (Default : 0)
 	  -a GAUTH, --service_authentication GAUTH
 	                        The 'Auth' parameter returned by Google Client Login.
 	                        (Can't be used with 'user_id')
@@ -30,7 +30,7 @@ Usage
 	                        with 'service_authentication')
 	  -p GOOGLE_PWD, --user_passwd GOOGLE_PWD
 	                        The Google user's password
-
+	
 You will need to have available the url of the spreadsheet and your Google Auth key for spreadsheets.
 
 An example command to execute would be :
