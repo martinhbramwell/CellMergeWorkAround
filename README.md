@@ -1,14 +1,15 @@
 Cell Merge Work Around
 ===================
 
-This tool provides a work around for the bug in Google Apps Script (Issue 618 -- http://code.google.com/p/google-apps-script-issues/issues/detail?id=618) that you cannot not detect if cells are merged. 
+This tool provides a work around for the bug in Google Apps Script (Issue 618 -- http://code.google.com/p/google-apps-script-issues/issues/detail?id=618) that it provides you with no way to determine if cells are merged. 
 
 Usage
 ------
 
 	A tool for getting the row and column spans of a single sheet in a Google
-	Drive Spreadsheet. With Google requires authentication *even if* a document is
-	"Public to anyone on the web".
+	Drive Spreadsheet. (Note that, for command line access, Google requires client authentication *even if* a document is "Public to anyone on the web").'
+
+    usage = "usage: %prog [options] arg"
 	
 	optional arguments:
 	  -h, --help            show this help message and exit
