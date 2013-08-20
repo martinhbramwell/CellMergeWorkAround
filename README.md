@@ -46,7 +46,7 @@ Note:  *wise* is the "service name" Google gives to the "Spreadsheets Data API" 
 
 You can also execute getSpans like this : 
 
-	./getSpans.py -k "0AhgdNB3-bSxAdDFBQWJ3YTAzd015UFJTZ3FwZlc1TlE" -s 3 -u "yourUserName@gmail.com" -p "yourPassword" > spans.csv
+	./getSpans.py -k "0AhgdNB3-bSxAdDFBQWJ3YTAzd015UFJTZ3FwZlc1TlE" -s 3 -u "yourUID@gmail.com" -p "yourPWD" > spans.csv
 	
 In which case the Auth key is generated, and used, internally.
 
