@@ -31,9 +31,23 @@ Usage
 
 You will need to have available the url of the spreadsheet and your Google Auth key for spreadsheets.
 
-An example command to execute would be:
+An example command to execute would be :
 
 	./getSpans.py -k "0AhgdNB3-bSxAdDFBQWJ3YTAzd015UFJTZ3FwZlc1TlE" -s 3 -a "yourGoogleAuthKey" > spans.csv
 
+If you do not have a Google Auth key you can get one using the command :
+
+	./getGauth.py wise yourUserName@gmail.com yourPassword
+
+Note:  *wise* is the "service name" Google gives to the "Spreadsheets Data API" (more listed here -- https://developers.google.com/gdata/faq#clientlogin)
+
+
+You can also execute getSpans like this : 
+
+	./getSpans.py -k "0AhgdNB3-bSxAdDFBQWJ3YTAzd015UFJTZ3FwZlc1TlE" -s 3 -u "yourUserName@gmail.com" -p "yourPassword" > spans.csv
+	
+In which case the Auth key is generated, and used, internally.
+
+The output is a CSV list of cells that have their colspab or rowspan (or both) attributes set to greater than one.
 
 
