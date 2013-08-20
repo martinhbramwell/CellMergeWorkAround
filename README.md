@@ -7,7 +7,8 @@ Usage
 ------
 
 	A tool for getting the row and column spans of a single sheet in a Google
-	Drive Spreadsheet. (Note that, for command line access, Google requires client authentication *even if* a document is "Public to anyone on the web").'
+	Drive Spreadsheet. (Note that, for command line access, Google requires client authentication 
+	*even if* a document is "Public to anyone on the web").'
 
     usage = "usage: %prog [options] arg"
 	
