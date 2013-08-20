@@ -52,7 +52,7 @@ In which case the Auth key is generated, and used, internally.
 
 The output is a CSV list of cells that have colspan or rowspan (or both) attributes greater than one.
 
-For testing you can use the key "0AhgdNB3-bSxAdDFBQWJ3YTAzd015UFJTZ3FwZlc1TlE" it is "Public to anyone on the web."
+For testing you can use the key "0AhgdNB3-bSxAdDFBQWJ3YTAzd015UFJTZ3FwZlc1TlE" it is "Public to anyone on the web." The full workbook is here : https://docs.google.com/spreadsheet/ccc?key=0AhgdNB3-bSxAdDFBQWJ3YTAzd015UFJTZ3FwZlc1TlE#gid=2
 
 For sheet #0 you should get :
 
