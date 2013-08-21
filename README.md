@@ -56,17 +56,17 @@ For testing you can use the key "0AhgdNB3-bSxAdDFBQWJ3YTAzd015UFJTZ3FwZlc1TlE" i
 
 For sheet #0 you should get :
 
-	"row", "col", "cols", "rows"
-	"2", "1", "1", "6"
-	"5", "2", "3", "5"
-	"4", "3", "3", "1"
+	"row", "col", "rows", "cols"
+	"2", "1", "6", "1"
+	"5", "2", "5", "3"
+	"4", "3", "1", "3"
 
 For sheet #2 you should get :
 
-	"row", "col", "cols", "rows"
-	"1", "2", "1", "6"
+	"row", "col", "rows", "cols"
+	"1", "2", "6", "1"
 	"8", "1", "2", "2"
-	"5", "4", "3", "5"
+	"5", "4", "5", "3"
 
 You can then load these back into your spreadsheet as a new sheet and use it as a reference for the location of merged cells for what ever (static) purpose, you might need.  Obviously you will have to run it before any sheet copying actions in case something has changed since the last time.
 

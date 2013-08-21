@@ -55,12 +55,12 @@ def getSpreadsheetSpannedCells(workbook_key, gauth, google_UID, google_PWD, shee
             idxCell += 1
         idxRow += 1
 
-    result = '"row", "col", "cols", "rows"'
+    result = '"row", "col", "rows", "cols"'
     for item in spanned_cells:
         row = spanned_cells[item]
         for coord in row:
             cell = row[coord]
-            result += '\n"{}", "{}", "{}", "{}"'.format(item, coord, cell['c'], cell['r'])
+            result += '\n"{}", "{}", "{}", "{}"'.format(item, coord, cell['r'], cell['c'])
 
     return result
 
