@@ -68,18 +68,18 @@ def getSpreadsheetSpannedCells(workbook_key, gauth, google_UID, google_PWD, shee
 
 def main():
 
-    getSpans = 'A tool for getting the row and column spans of a single sheet in a Google Drive Spreadsheet. With Google requires authentication *even if* a document is "Public to anyone on the web".'
+    getSpans = 'A tool for getting the row and column spans of a single sheet in a Google Drive Spreadsheet. (Note that for command line access, Google requires client authentication *even if* a document is "Public to anyone on the web").'
     usage = "usage: %prog [options] arg"
     parser = argparse.ArgumentParser(description=getSpans)
     
     parser.add_argument("-t", "--service_type", dest="google_service", default="wise"
-                      , help="If you intend to work with something other than a spreadsheet you'll need to change this.")
+                      , help="If you intend to work with something other than a spreadsheet you'll need to change this. (Default : 'wise')")
 
     parser.add_argument("-k", "--spreadsheet_key", dest="workbook_key", required=True
                       , help="The key parameter taken from URL of the spreadsheet. (Required!)")
                       
     parser.add_argument("-s", "--sheet_id", dest="sheet_id"
-                      , help="The identifier of the single sheet to be accessed.")
+                      , help="The identifier of the single sheet to be accessed. (Default : 0)")
                       
     group1 = parser.add_mutually_exclusive_group(required=True)
     group1.add_argument("-a", "--service_authentication", dest="gauth"
@@ -99,5 +99,8 @@ if __name__ == "__main__":
     print result
 	
 
-# Example :  ./getSpans.py -k "0AhGdN..S.P.R.E.A.D.S.H.E.E.T...K.E.Y..c1TlE" -u "yourUserName@gmail.com" -p "yourPassword" > spans.csv
+# Example :  ./getSpans.py -k "0AhGdN..S.P.R.E.A.D.S.H.E.E.T...K.E.Y..c1TlE" -s 3 -u "yourUserName@gmail.com" -p "yourPassword" > spans.csv
+#    OR
+# Example :  ./getSpans.py -k "0AhGdN..S.P.R.E.A.D.S.H.E.E.T...K.E.Y..c1TlE" -s 3 -a "yourGoogleAuthKey" > spans.csv
+
 
