@@ -3,6 +3,18 @@ Cell Merge Work Around
 
 This tool provides a work around for the bug in Google Apps Script (Issue 618 -- http://code.google.com/p/google-apps-script-issues/issues/detail?id=618) that it provides you with no way to determine if cells are merged. 
 
+Supply it with:
+
+- your access credentials
+- a Spreadsheet unique key
+- a sheet index number
+ 
+Get back (via stdout): a CSV listing of all merged cell areas on the specified sheet.
+
+Developed as a Python 2.7 shell script running out of /usr/bin/python
+
+Tested only in Ubuntu 12.04 LTS
+
 Usage
 ------
 
