@@ -7,7 +7,7 @@ Supply it with:
 
 - your access credentials
 - a Spreadsheet unique key
-- a sheet index number
+- a comma separated list of sheet index numbers (eg 3,6,2  OR just  7)
  
 Get back (via stdout): a CSV listing of all merged cell areas on the specified sheet.
 
@@ -31,9 +31,9 @@ Usage
 	  -k WORKBOOK_KEY, --spreadsheet_key WORKBOOK_KEY
 	                        The key parameter taken from URL of the spreadsheet.
 	                        (Required!)
-	  -s SHEET_ID, --sheet_id SHEET_ID
-	                        The identifier of the single sheet to be accessed.
-	                        (Default : 0)
+      -s SHEET_IDS, --sheet_ids SHEET_IDS
+                            A comma separated list of sheet identifiers of the
+                            single sheet to be accessed, eg 1,8,4,3. (Default : 0)
 	  -a GAUTH, --service_authentication GAUTH
 	                        The 'Auth' parameter returned by Google Client Login.
 	                        (Can't be used with 'user_id')
@@ -47,9 +47,9 @@ You will need to provide, at least, the url of the spreadsheet and your Google A
 
 An example command to execute would be :
 
-	./getSpans.py -k "0AhgdNB3-bSxAdDFBQWJ3YTAzd015UFJTZ3FwZlc1TlE" -s 3 -a "yourGoogleAuthKey" > spans.csv
+	./getSpans.py -k "0AhgdNB3-bSxAdDFBQWJ3YTAzd015UFJTZ3FwZlc1TlE" -s 2,0 -a "yourGoogleAuthKey" > spans.csv
 
-If you do not have a Google Auth key you can get one using the command :
+If you do not have a Google Auth key you can get one using this other command :
 
 	./getGauth.py wise yourUserName@gmail.com yourPassword
 
@@ -58,7 +58,7 @@ Note:  *wise* is the "service name" Google gives to the "Spreadsheets Data API" 
 
 You can also execute getSpans like this : 
 
-	./getSpans.py -k "0AhgdNB3-bSxAdDFBQWJ3YTAzd015UFJTZ3FwZlc1TlE" -s 3 -u "yourUID@gmail.com" -p "yourPWD" > spans.csv
+	./getSpans.py -k "0AhgdNB3-bSxAdDFBQWJ3YTAzd015UFJTZ3FwZlc1TlE" -s 2,0 -u "yourUID@gmail.com" -p "yourPWD" > spans.csv
 	
 In which case the Auth key is generated, and used, internally.
 
@@ -66,19 +66,15 @@ The output is a CSV list of cells that have colspan or rowspan (or both) attribu
 
 For testing you can use the key "0AhgdNB3-bSxAdDFBQWJ3YTAzd015UFJTZ3FwZlc1TlE" it is "Public to anyone on the web." The full workbook is here : https://docs.google.com/spreadsheet/ccc?key=0AhgdNB3-bSxAdDFBQWJ3YTAzd015UFJTZ3FwZlc1TlE#gid=2
 
-For sheet #0 you should get :
+You should get a result like this :
 
-	"row", "col", "rows", "cols"
-	"2", "1", "6", "1"
-	"5", "2", "5", "3"
-	"4", "3", "1", "3"
-
-For sheet #2 you should get :
-
-	"row", "col", "rows", "cols"
-	"1", "2", "6", "1"
-	"8", "1", "2", "2"
-	"5", "4", "5", "3"
+    "sheet", "row", "col", "rows", "cols"
+    "2", "1", "2", "6", "1"
+    "2", "8", "1", "2", "2"
+    "2", "5", "4", "5", "3"
+    "0", "2", "1", "6", "1"
+    "0", "5", "2", "5", "3"
+    "0", "4", "3", "1", "3"
 
 You can then load these back into your spreadsheet as a new sheet and use it as a reference for the location of merged cells for what ever (static) purpose, you might need.  Obviously you will have to run it before any sheet copying actions in case something has changed since the last time.
 

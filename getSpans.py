@@ -5,32 +5,14 @@ import argparse, urllib2
 from BeautifulSoup import BeautifulSoup
 import getGauth
 
-def getSpreadsheetSpannedCells(workbook_key, gauth, google_UID, google_PWD, sheet_id=0, google_service = "wise"):
+def getSheetSpannedCells(page):
 
-    sheet_number=str(sheet_id)    
-    url = "https://docs.google.com/feeds/download/spreadsheets/Export?key=" + workbook_key + "&exportFormat=html&gid=" + sheet_number
-    
-    if gauth is not None:
-        google_authorization_key = gauth
-    else:
-        google_authorization_key = getGauth.getGoogleAuthorizationKey(
-                 google_service
-               , google_UID
-               , google_PWD
-            )
-
-    request = urllib2.Request(url, headers={"Authorization": "GoogleLogin auth=" + google_authorization_key})
-
-    page = urllib2.urlopen(request).read()
-#    return url
-#    return page
-    
     soup = BeautifulSoup(page)
 
     table = soup.body.table
             
     idxRow = 0
-    spanned_cells = {}
+    cells = {}
     for row in table:
         idxCell = 0
         col = {}
@@ -51,16 +33,45 @@ def getSpreadsheetSpannedCells(workbook_key, gauth, google_UID, google_PWD, shee
                     col[str(idxCell)] = cellSpec
                 idxAttr += 1
             if foundInRow:
-                spanned_cells[str(idxRow)] = col
+                cells[str(idxRow)] = col
             idxCell += 1
         idxRow += 1
 
-    result = '"row", "col", "rows", "cols"'
-    for item in spanned_cells:
-        row = spanned_cells[item]
-        for coord in row:
-            cell = row[coord]
-            result += '\n"{}", "{}", "{}", "{}"'.format(item, coord, cell['r'], cell['c'])
+    return cells
+
+
+
+def getSpreadsheetSpannedCells(workbook_key, gauth, google_UID, google_PWD, sheet_ids=-1, google_service = "wise"):
+
+    url_part = "https://docs.google.com/feeds/download/spreadsheets/Export?key=" + workbook_key + "&exportFormat=html"
+    
+    if gauth is not None:
+        google_authorization_key = gauth
+    else:
+        google_authorization_key = getGauth.getGoogleAuthorizationKey(
+                 google_service
+               , google_UID
+               , google_PWD
+            )
+    header = {"Authorization": "GoogleLogin auth=" + google_authorization_key}
+    
+    if sheet_ids is None:
+        return "Found no sheet ID to use."
+    else:
+        result = '"sheet", "row", "col", "rows", "cols"'
+        for sheet in sheet_ids.split(','):
+            url = url_part + "&gid=" + str(sheet)
+            request = urllib2.Request(url, headers=header)
+
+            page = urllib2.urlopen(request).read()
+
+            spanned_cells = getSheetSpannedCells(page)
+            
+            for item in spanned_cells:
+                row = spanned_cells[item]
+                for coord in row:
+                    cell = row[coord]
+                    result += '\n"{}", "{}", "{}", "{}", "{}"'.format(sheet, item, coord, cell['r'], cell['c'])
 
     return result
 
@@ -78,8 +89,8 @@ def main():
     parser.add_argument("-k", "--spreadsheet_key", dest="workbook_key", required=True
                       , help="The key parameter taken from URL of the spreadsheet. (Required!)")
                       
-    parser.add_argument("-s", "--sheet_id", dest="sheet_id"
-                      , help="The identifier of the single sheet to be accessed. (Default : 0)")
+    parser.add_argument("-s", "--sheet_ids", dest="sheet_ids"
+                      , help="A comma separated list of sheet identifiers of the single sheet to be accessed, eg 1,8,4,3. (Default : 0)")
                       
     group1 = parser.add_mutually_exclusive_group(required=True)
     group1.add_argument("-a", "--service_authentication", dest="gauth"
@@ -91,7 +102,7 @@ def main():
 
     args = parser.parse_args()
     
-    return getSpreadsheetSpannedCells(args.workbook_key, args.gauth, args.google_UID, args.google_PWD, args.sheet_id, args.google_service)
+    return getSpreadsheetSpannedCells(args.workbook_key, args.gauth, args.google_UID, args.google_PWD, args.sheet_ids, args.google_service)
 
 
 if __name__ == "__main__":
