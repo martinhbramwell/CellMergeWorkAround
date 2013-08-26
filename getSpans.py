@@ -1,23 +1,79 @@
 #!/usr/bin/python
 #
-
-import argparse, urllib2
 from BeautifulSoup import BeautifulSoup
-import getGauth
 
-def getSheetSpannedCells(page):
+spans_key = 'span'
+borders_key = 'brdr'
 
+def extendEdgesOfSpan(key, dictCells, cellSpec):
+
+    dictCells[key][spans_key] = '"{}", "{}"'.format(cellSpec['r'], cellSpec['c'])
+
+    top_left_borders = dictCells[key][borders_key]
+
+    coords = key.split(":")
+    sheet = int(coords[0])
+    col = int(coords[2])
+    row = int(coords[1])
+    colSpan = int(cellSpec['c'])
+    rowSpan = int(cellSpec['r'])
+
+    if colSpan > 1 :
+        for ixRow in range(rowSpan) :
+            newRow = row + ixRow
+            newCol = col + colSpan - 1
+            newKey = '{}:{}:{}'.format(sheet, newRow, newCol)
+            '''
+            print 'Extend column {}{} ({}) to {}{} ({})'.format( 
+                  str(unichr(64 + col))
+                , row
+                , key
+                , str(unichr(64 + newCol))
+                , newRow
+                , newKey)
+            '''
+            if newKey not in dictCells :
+                dictCells[newKey] = {}
+            dictCells[newKey][borders_key] = top_left_borders
+
+    if rowSpan > 1 :
+        for ixCol in range(colSpan) :
+            newRow = row + rowSpan - 1
+            newCol = col + ixCol
+            newKey = '{}:{}:{}'.format(sheet, newRow, newCol)
+            '''
+            print 'Extend row {}{} ({}) to {}{} ({})'.format( 
+                str(unichr(64 + col))
+                , row
+                , key
+                , str(unichr(64 + newCol))
+                , newRow
+                , newKey)
+            '''
+            if newKey not in dictCells :
+                dictCells[newKey] = {}
+            dictCells[newKey][borders_key] = top_left_borders
+
+    return dictCells
+
+def getSheetSpannedCells(dictCells, page, sheet):
+
+    page.seek(0)
     soup = BeautifulSoup(page)
 
+    
     table = soup.body.table
             
     idxRow = 0
-    cells = {}
+
     for row in table:
         idxCell = 0
         col = {}
         foundInRow = False
         for cell in row:
+        
+            key = '{}:{}:{}'.format(sheet, idxRow, idxCell)
+
             idxAttr = 1
             cellSpec = {'c':'1', 'r':'1'}
             found = False
@@ -28,87 +84,38 @@ def getSheetSpannedCells(page):
                 if attr == "rowspan":
                     cellSpec['r'] = value
                     found = True
-                if found:
-                    foundInRow = True
-                    col[str(idxCell)] = cellSpec
                 idxAttr += 1
-            if foundInRow:
-                cells[str(idxRow)] = col
+                
+            if found:
+                if not key in dictCells :
+                    dictCells[key] = {}
+                    dictCells[key][spans_key] = '"{}", "{}"'.format(cellSpec['r'], cellSpec['c'])
+                else:
+                    dictCells = extendEdgesOfSpan(key, dictCells, cellSpec)
+
             idxCell += 1
         idxRow += 1
 
-    return cells
+    return dictCells
 
 
+def getSpreadsheetSpannedCells(dictCells, page, sheet):
 
-def getSpreadsheetSpannedCells(workbook_key, gauth, google_UID, google_PWD, sheet_ids=-1, google_service = "wise"):
-
-    url_part = "https://docs.google.com/feeds/download/spreadsheets/Export?key=" + workbook_key + "&exportFormat=html"
+    return getSheetSpannedCells(dictCells, page, sheet)
     
-    if gauth is not None:
-        google_authorization_key = gauth
-    else:
-        google_authorization_key = getGauth.getGoogleAuthorizationKey(
-                 google_service
-               , google_UID
-               , google_PWD
-            )
-    header = {"Authorization": "GoogleLogin auth=" + google_authorization_key}
-    
-    if sheet_ids is None:
-        return "Found no sheet ID to use."
-    else:
-        result = '"sheet", "row", "col", "rows", "cols"'
-        for sheet in sheet_ids.split(','):
-            url = url_part + "&gid=" + str(sheet)
-            request = urllib2.Request(url, headers=header)
+    result = ''
+    for row in spanned_cells:
+        line = spanned_cells[row]
+        for col in line:
+            cell = line[col]
+            result += '\n"{}", "{}", "{}", "span", "{}", "{}", "", "", "", ""'.format(sheet, row, col, cell['r'], cell['c'])
 
-            page = urllib2.urlopen(request).read()
-
-            spanned_cells = getSheetSpannedCells(page)
-            
-            for item in spanned_cells:
-                row = spanned_cells[item]
-                for coord in row:
-                    cell = row[coord]
-                    result += '\n"{}", "{}", "{}", "{}", "{}"'.format(sheet, item, coord, cell['r'], cell['c'])
 
     return result
 
-
-
-def main():
-
-    getSpans = 'A tool for getting the row and column spans of a single sheet in a Google Drive Spreadsheet. (Note that for command line access, Google requires client authentication *even if* a document is "Public to anyone on the web").'
-    usage = "usage: %prog [options] arg"
-    parser = argparse.ArgumentParser(description=getSpans)
-    
-    parser.add_argument("-t", "--service_type", dest="google_service", default="wise"
-                      , help="If you intend to work with something other than a spreadsheet you'll need to change this. (Default : 'wise')")
-
-    parser.add_argument("-k", "--spreadsheet_key", dest="workbook_key", required=True
-                      , help="The key parameter taken from URL of the spreadsheet. (Required!)")
-                      
-    parser.add_argument("-s", "--sheet_ids", dest="sheet_ids"
-                      , help="A comma separated list of sheet identifiers of the single sheet to be accessed, eg 1,8,4,3. (Default : 0)")
-                      
-    group1 = parser.add_mutually_exclusive_group(required=True)
-    group1.add_argument("-a", "--service_authentication", dest="gauth"
-                      , help="The 'Auth' parameter returned by Google Client Login. (Can't be used with 'user_id')")
-    
-    group1.add_argument("-u", "--user_id", dest="google_UID", help="Thi is the Google user's email address. (Can't be used with 'service_authentication')")
-
-    parser.add_argument("-p", "--user_passwd", dest="google_PWD", help="The Google user's password")
-
-    args = parser.parse_args()
-    
-    return getSpreadsheetSpannedCells(args.workbook_key, args.gauth, args.google_UID, args.google_PWD, args.sheet_ids, args.google_service)
-
-
 if __name__ == "__main__":
-    result = main()
+    result = getSpreadsheetSpannedCells("0Asxy-TdDgbjidG5ycTlRYTg0R0RyZzdJbE81MWtWcmc", "6")
     print result
-	
 
 # Example :  ./getSpans.py -k "0AhGdN..S.P.R.E.A.D.S.H.E.E.T...K.E.Y..c1TlE" -s 3 -u "yourUserName@gmail.com" -p "yourPassword" > spans.csv
 #    OR
