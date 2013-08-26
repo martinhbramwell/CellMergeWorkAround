@@ -1,15 +1,22 @@
 Cell Merge Work Around
 ===================
 
-This tool provides a work around for the bug in Google Apps Script (Issue 618 -- http://code.google.com/p/google-apps-script-issues/issues/detail?id=618) that it provides you with no way to determine if cells are merged. 
+This tool provides a work around for two bugs in Google Apps Script.
+ - Issue 618 -- http://code.google.com/p/google-apps-script-issues/issues/detail?id=618  -- that it provides no way to determine if cells are merged.
+ - Unreported issue - No way to determine cell border settings.
 
-Supply it with:
+What it does
+-------------
+
+This tool grabs a HTML copy of the sheets you specify and generates a CSV file that holds the row span, column span & / or border style data of each affected cell.
+
+Supply it with ...
 
 - your access credentials
 - a Spreadsheet unique key
 - a comma separated list of sheet index numbers (eg 3,6,2  OR just  7)
  
-Get back (via stdout): a CSV listing of all merged cell areas on the specified sheet.
+... and get back (via stdout): a CSV listing of all merged cell areas on the specified sheet.
 
 Developed as a Python 2.7 shell script running out of /usr/bin/python
 
