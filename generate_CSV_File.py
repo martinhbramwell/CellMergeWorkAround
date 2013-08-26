@@ -66,7 +66,7 @@ def getConnectionHeader(gauth, google_UID, google_PWD, google_service):
 
 def main():
 
-    desc = 'A tool for getting the row and column spans of a single sheet in a Google Drive Spreadsheet. (Note that for command line access, Google requires client authentication *even if* a document is "Public to anyone on the web").'
+    desc = 'A tool for getting the row span, column span & / or border style data of one or more sheets in a Google Drive Spreadsheet. (Note that for command line access, Google requires client authentication *even if* a document is "Public to anyone on the web").'
     usage = "usage: %prog [options] arg"
     parser = argparse.ArgumentParser(description=desc)
     

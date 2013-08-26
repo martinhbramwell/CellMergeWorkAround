@@ -25,30 +25,38 @@ Tested only in Ubuntu 12.04 LTS
 Usage
 ------
 
-	A tool for getting the row and column spans of a single sheet in a Google
-	Drive Spreadsheet. (Note that for command line access, Google requires client
-	authentication *even if* a document is "Public to anyone on the web").
+    usage: generate_CSV_File.py [-h] [-t GOOGLE_SERVICE] -k WORKBOOK_KEY
+                                [-s SHEET_IDS] (-a GAUTH | -u GOOGLE_UID)
+                                [-p GOOGLE_PWD]
 
-	optional arguments:
-	  -h, --help            show this help message and exit
-	  -t GOOGLE_SERVICE, --service_type GOOGLE_SERVICE
-	                        If you intend to work with something other than a
-	                        spreadsheet you'll need to change this. (Default :
-	                        'wise')
-	  -k WORKBOOK_KEY, --spreadsheet_key WORKBOOK_KEY
-	                        The key parameter taken from URL of the spreadsheet.
-	                        (Required!)
+    A tool for getting the row span, column span & / or border style data of one
+    or more sheets in a Google Drive Spreadsheet. (Note that for command line
+    access, Google requires client authentication *even if* a document is "Public
+    to anyone on the web").
+
+    optional arguments:
+      -h, --help            show this help message and exit
+      -t GOOGLE_SERVICE, --service_type GOOGLE_SERVICE
+                            If you intend to work with something other than a
+                            spreadsheet you'll need to change this. (Default :
+                            'wise')
+      -k WORKBOOK_KEY, --spreadsheet_key WORKBOOK_KEY
+                            The key parameter taken from URL of the spreadsheet.
+                            (Required!)
       -s SHEET_IDS, --sheet_ids SHEET_IDS
                             A comma separated list of sheet identifiers of the
                             single sheet to be accessed, eg 1,8,4,3. (Default : 0)
-	  -a GAUTH, --service_authentication GAUTH
-	                        The 'Auth' parameter returned by Google Client Login.
-	                        (Can't be used with 'user_id')
-	  -u GOOGLE_UID, --user_id GOOGLE_UID
-	                        Thi is the Google user's email address. (Can't be used
-	                        with 'service_authentication')
-	  -p GOOGLE_PWD, --user_passwd GOOGLE_PWD
-	                        The Google user's password
+      -a GAUTH, --service_authentication GAUTH
+                            The 'Auth' parameter returned by Google Client Login.
+                            (Can't be used with 'user_id')
+      -u GOOGLE_UID, --user_id GOOGLE_UID
+                            Thi is the Google user's email address. (Can't be used
+                            with 'service_authentication')
+      -p GOOGLE_PWD, --user_passwd GOOGLE_PWD
+                            The Google user's password
+
+
+
 	
 You will need to provide, at least, the url of the spreadsheet and your Google Auth key for spreadsheets.
 
