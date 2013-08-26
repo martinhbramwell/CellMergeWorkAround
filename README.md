@@ -22,6 +22,18 @@ Developed as a Python 2.7 shell script running out of /usr/bin/python
 
 Tested only in Ubuntu 12.04 LTS
 
+Learning Python?
+-------
+
+This program is fairly straight forward.  Experts would see many ways to do it better, but -- it works!
+
+You can use it to learn about screen scraping other people's pages :-)  :
+
+ - urllib2 : reading a web page from a remote server and writing it on your local machine
+ - TinyCss : analyzing CSS style info
+ - argparse : getting command line parameters
+ - BeautifulSoup : analyzing HTML to get at data you want
+
 Usage
 ------
 
