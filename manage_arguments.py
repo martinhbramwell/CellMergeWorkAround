@@ -30,7 +30,7 @@ def getArgs() :
 
     parser.add_argument("-ci", "--client_id", dest="client_project", required=True, help="This is the Client ID you get from Google's API console.")
     
-    parser.add_argument("-ce", "--client_email", dest="client_email", required=False, help="This is the GMail account that will be used for SMTP communication with spreadsheet owners. (Can't be used with 'service_authentication'")
+    parser.add_argument("-ce", "--client_email", dest="client_email", required=False, help="This is the GMail account that will be used for SMTP communication with spreadsheet owners.")
     
     '''
     group1 = parser.add_mutually_exclusive_group(required=True)
