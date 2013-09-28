@@ -37,35 +37,65 @@ You can use it to learn about screen scraping other people's pages :-)  :
 Usage
 ------
 
-    usage: generate_CSV_File.py [-h] [-t GOOGLE_SERVICE] -k WORKBOOK_KEY
-                                [-s SHEET_IDS] (-a GAUTH | -u GOOGLE_UID)
-                                [-p GOOGLE_PWD]
+	usage: generate_CSV_File.py [-h] [-il IMMEDIATE_LOAD] -ssk WORKBOOK_KEY -si
+		                    SHEET_IDS -ue USER_EMAIL -ci CLIENT_PROJECT
+		                    [-ce CLIENT_EMAIL] [-st GOOGLE_SERVICE]
+		                    [-sn SHEET_NAME] [-sat SMTP_ACCESS_TOKEN]
+		                    [-cs CLIENT_SECRET] [-am AUTH_METHOD]
+		                    [-srt SMTP_REFRESH_TOKEN] [-ru REDIRECT_URI]
 
-    A tool for getting the row span, column span & / or border style data of one
-    or more sheets in a Google Drive Spreadsheet. (Note that for command line
-    access, Google requires client authentication *even if* a document is "Public
-    to anyone on the web").
+	A tool for getting the row span, column span & / or border style data of one
+	or more sheets in a Google Drive Spreadsheet. (Note that for command line
+	access, Google requires client authentication *even if* a document is "Public
+	to anyone on the web"). If OAuth2 arguments are configured and
+	"-i/--immediate_load" is indicated, then the CSV file will be pushed into the
+	same spreadsheet from which the data was first read.
 
-    optional arguments:
-      -h, --help            show this help message and exit
-      -t GOOGLE_SERVICE, --service_type GOOGLE_SERVICE
-                            If you intend to work with something other than a
-                            spreadsheet you'll need to change this. (Default :
-                            'wise')
-      -k WORKBOOK_KEY, --spreadsheet_key WORKBOOK_KEY
-                            The key parameter taken from URL of the spreadsheet.
-                            (Required!)
-      -s SHEET_IDS, --sheet_ids SHEET_IDS
-                            A comma separated list of sheet identifiers of the
-                            single sheet to be accessed, eg 1,8,4,3. (Default : 0)
-      -a GAUTH, --service_authentication GAUTH
-                            The 'Auth' parameter returned by Google Client Login.
-                            (Can't be used with 'user_id')
-      -u GOOGLE_UID, --user_id GOOGLE_UID
-                            Thi is the Google user's email address. (Can't be used
-                            with 'service_authentication')
-      -p GOOGLE_PWD, --user_passwd GOOGLE_PWD
-                            The Google user's password
+	optional arguments:
+	  -h, --help            show this help message and exit
+	  -il IMMEDIATE_LOAD, --immediate_load IMMEDIATE_LOAD
+		                The name for the sheet in the target workbook to be
+		                created/replaced with the generated CSV. (Default :
+		                Null)
+	  -ssk WORKBOOK_KEY, --spreadsheet_key WORKBOOK_KEY
+		                The key parameter taken from URL of the spreadsheet.
+		                (Required.)
+	  -si SHEET_IDS, --sheet_ids SHEET_IDS
+		                A comma separated list of sheet identifiers of the
+		                single sheet to be accessed, eg 0,1,8,4,3.
+	  -ue USER_EMAIL, --user_email USER_EMAIL
+		                This is the GMail account of the spreadsheet owner.
+	  -ci CLIENT_PROJECT, --client_id CLIENT_PROJECT
+		                This is the Client ID you get from Google's API
+		                console.
+	  -ce CLIENT_EMAIL, --client_email CLIENT_EMAIL
+		                This is the GMail account that will be used for SMTP
+		                communication with spreadsheet owners. (Can't be used
+		                with 'service_authentication'
+	  -st GOOGLE_SERVICE, --service_type GOOGLE_SERVICE
+		                If you intend to work with something other than a
+		                spreadsheet you'll need to change this. (Default :
+		                'wise')
+	  -sn SHEET_NAME, --sheet_name SHEET_NAME
+		                The name of the sheet to create/replace. (Required.
+		                Default : meta_patches)
+	  -sat SMTP_ACCESS_TOKEN, --smtp_access_token SMTP_ACCESS_TOKEN
+		                The token you get from Google that allows you to use
+		                your own GMail account as an SMTP server, without
+		                needing to use your username and password.
+	  -cs CLIENT_SECRET, --client_secret CLIENT_SECRET
+		                The Client Secret you get from Google's API console.
+	  -am AUTH_METHOD, --auth_method AUTH_METHOD
+		                Can be either 'ForDevices', 'InstalledApp' or
+		                'ToBeDropped' (to edit storage to drop the connection
+		                between project and user)
+	  -srt SMTP_REFRESH_TOKEN, --smtp_refresh_token SMTP_REFRESH_TOKEN
+		                This refreshes the access token that refreshes your
+		                authorization to use your GMail account as an SMTP
+		                server without having to ask you again.
+	  -ru REDIRECT_URI, --args.redirect_uri REDIRECT_URI
+		                This is the Redirect URI you get from Google's API
+		                console.
 
 
 
