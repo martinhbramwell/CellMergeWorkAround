@@ -10,9 +10,11 @@ What it does
 
 This tool grabs a HTML copy of the sheets you specify and generates a CSV file that holds the row span, column span & / or border style data of each affected cell.
 
+Optionally, it pushes the CSV data back into the same workbook as a new sheet.
+
 Supply it with ...
 
-- your access credentials
+- your OAuth2 credentials
 - a Spreadsheet unique key
 - a comma separated list of sheet index numbers (eg 3,6,2  OR just  7)
  
@@ -27,12 +29,13 @@ Learning Python?
 
 This program is fairly straight forward.  Experts would see many ways to do it better, but -- it works!
 
-You can use it to learn about screen scraping other people's pages :-)  :
+You can use it to learn about screen scraping other people's spreadsheets :-)  :
 
  - urllib2 : reading a web page from a remote server and writing it on your local machine
  - TinyCss : analyzing CSS style info
  - argparse : getting command line parameters
  - BeautifulSoup : analyzing HTML to get at data you want
+ - gspread : writing data from a Python program into a Google Spreadsheet
 
 Usage
 ------
@@ -100,26 +103,17 @@ Usage
 
 
 	
-You will need to provide, at least, the url of the spreadsheet and your Google Auth key for spreadsheets.
+You will need to provide, at least, the url of the spreadsheet and your Google OAuth2 credentials for spreadsheets.
 
 An example command to execute would be :
 
-	./generate_CSV_File.py -k "0AhgdNB3-bSxAdDFBQWJ3YTAzd015UFJTZ3FwZlc1TlE" -s 2,0 -a "yourGoogleAuthKey" > spans.csv
-
-If you do not have a Google Auth key you can get one using this other command :
-
-	./getGauth.py wise yourUserName@gmail.com yourPassword
+	./generate_CSV_File.py -ssk 0Asxy-TdDgbjidEpmYVBXaHRUclRtalpHdkw0ek1Md2c -si 6 -ue dude.awap@gmail.com -cs 'Zis38NZ_wyBII2Q9xfMRthW-' -ci 204618981389-fod7457tdhtfvmglt287dg7p30579r0l.apps.googleusercontent.com -am ForDevices -ce alicia.factorepo@gmail.com  -il meta_patches -sat 'ya29.AHES6ZQUvWvl5vsB6fNIc_fsXWe_0x-aNn6Bxxel9LNT1gv6wX4c1w' -srt '1/hO_TrQqKJ063FGB0uDeWEU5P1SasFnSJeVbhZUg9ZvE'
 
 Note:  *wise* is the "service name" Google gives to the "Spreadsheets Data API" (more listed here -- https://developers.google.com/gdata/faq#clientlogin)
 
-
-You can also execute generate_CSV_File like this : 
-
-	./generate_CSV_File.py -k "0AhgdNB3-bSxAdDFBQWJ3YTAzd015UFJTZ3FwZlc1TlE" -s 2,0 -u "yourUID@gmail.com" -p "yourPWD" > spans.csv
-	
-In which case the Auth key is generated, and used, internally.
-
-The output is a CSV list of cells that have colspan or rowspan (or both) attributes greater than one.
+The output is a CSV list of:
+ - cells that span rows &/or columns
+ - have borders.
 
 For testing you can use the key "0AhgdNB3-bSxAdDFBQWJ3YTAzd015UFJTZ3FwZlc1TlE" it is "Public to anyone on the web." The full workbook is here : https://docs.google.com/spreadsheet/ccc?key=0AhgdNB3-bSxAdDFBQWJ3YTAzd015UFJTZ3FwZlc1TlE#gid=2
 
@@ -183,7 +177,8 @@ You should get a result like this :
         "2", "19", "7", "", "", "", "", "", "", "", "", "dashed", "#1c4587", "1", "dashed", "#1c4587", "1"
         "2", "22", "2", "", "", "", "", "", "", "", "", "", "", "", "solid", "#990000", "1"
 
-You can then load these back into your spreadsheet as a new sheet and use it as a reference for the location of merged cells for what ever (static) purpose, you might need.  Obviously you will have to run it before any sheet copying actions in case something has changed since the last time.
+If you specify "-il a_sheet_name" , the program will then load these lines back into the spreadsheet as a new sheet of that name.  You can then use it as a reference for the location of merged cells for what ever (static) purpose, you might need.  Obviously, you will always have to run it after every change to the indicated sheets before any sheet copying actions in case spans or borders have changed since the last time.
+
 
 
 
