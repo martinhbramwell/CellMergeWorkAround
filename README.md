@@ -136,7 +136,7 @@ You will need to provide, at least, the url of the spreadsheet and your Google O
 
 An example command to execute would be :
 
-	./generate_CSV_File.py -ssk 0Asxy-TdDgbjidEpmYVBXaHRUclRtalpHdkw0ek1Md2c -si 6 -ue dude.awap@gmail.com -cs 'Zis38NZ_wyBII2Q9xfMRthW-' -ci 204618981389-fod7457tdhtfvmglt287dg7p30579r0l.apps.googleusercontent.com -am ForDevices -ce alicia.factorepo@gmail.com  -il meta_patches -sat 'ya29.AHES6ZQUvWvl5vsB6fNIc_fsXWe_0x-aNn6Bxxel9LNT1gv6wX4c1w' -srt '1/hO_TrQqKJ063FGB0uDeWEU5P1SasFnSJeVbhZUg9ZvE'
+	 ./generate_CSV_File.py -ssk 0Asxy-TdDgbjidxxxxxxxxxxxxxxxxlpHdkw0ek1Md2c -si 6 -ue dude.awap@gmail.com -cs 'Zis38xxxxxxxxxfMRthW-' -ci 2046189xxxxxxxxxxxxxxxxxxxx579r0l.apps.googleusercontent.com -am ForDevices -ce alicia.factorepo@gmail.com  -il meta_patches -sat 'ya29.AHES6Zxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx6wX4c1w' -srt '1/hO_TrQqKJ063FGxxxxxxxxxxxxxxxxxxxxxZUg9ZvE'
 
 Note:  *wise* is the "service name" Google gives to the "Spreadsheets Data API" (more listed here -- https://developers.google.com/gdata/faq#clientlogin)
 
