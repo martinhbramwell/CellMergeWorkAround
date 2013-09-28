@@ -37,6 +37,36 @@ You can use it to learn about screen scraping other people's spreadsheets :-)  :
  - BeautifulSoup : analyzing HTML to get at data you want
  - gspread : writing data from a Python program into a Google Spreadsheet
 
+Preparation
+------
+
+Obtain this project [  https://github.com/martinhbramwell/CellMergeWorkAround  ] and also this one [  https://github.com/martinhbramwell/gspread  ]
+
+You will have two directories like this :
+
+    /-+
+      + - CellMergeWorkAround
+      + - gspread
+          -+ - docs
+           + - gspread
+           + - logs
+           + - tests
+
+CellMergeWorkAround will not work without parts of gspread, so you need copy the gspread subdirectory into CellMergeWorkAround, so as to end up with this:
+
+    /-+
+      + - CellMergeWorkAround
+           + - gspread
+      + - gspread
+          -+ - docs
+           + - gspread
+           + - logs
+           + - tests
+
+Also, you may want to be able to email your remote user to get them to tell Google your access attempts are authorized anmd should be permitted.
+Run the gspread/prepSMTP.py and retrieve the values from the foot of the file test_parms.py
+
+
 Usage
 ------
 
@@ -73,8 +103,7 @@ Usage
 		                console.
 	  -ce CLIENT_EMAIL, --client_email CLIENT_EMAIL
 		                This is the GMail account that will be used for SMTP
-		                communication with spreadsheet owners. (Can't be used
-		                with 'service_authentication'
+		                communication with spreadsheet owners.
 	  -st GOOGLE_SERVICE, --service_type GOOGLE_SERVICE
 		                If you intend to work with something other than a
 		                spreadsheet you'll need to change this. (Default :
