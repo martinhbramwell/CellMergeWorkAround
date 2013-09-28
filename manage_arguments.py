@@ -30,16 +30,18 @@ def getArgs() :
 
     parser.add_argument("-ci", "--client_id", dest="client_project", required=True, help="This is the Client ID you get from Google's API console.")
     
+    parser.add_argument("-ce", "--client_email", dest="client_email", required=False, help="This is the GMail account that will be used for SMTP communication with spreadsheet owners. (Can't be used with 'service_authentication'")
+    
+    '''
     group1 = parser.add_mutually_exclusive_group(required=True)
     group1.add_argument("-sa", "--service_authentication", dest="gauth"
                       , help="The 'Auth' parameter returned by Google Client Login. (Can't be used with 'user_id')")
     
 #    group1.add_argument("-ui", "--user_id", dest="google_UID", help="Thi is the Google user's email address. )")
-    group1.add_argument("-ce", "--client_email", dest="client_email", required=False, help="This is the GMail account that will be used for SMTP communication with spreadsheet owners. (Can't be used with 'service_authentication'")
                       
 
     parser.add_argument("-up", "--user_passwd", dest="google_PWD", help="The Google user's password")
-    
+    '''
 
     # Required but default afforded
     parser.add_argument("-st", "--service_type", dest="google_service", default="wise"
@@ -64,10 +66,6 @@ def getArgs() :
 #    parser.add_argument("CSV_file", help="The CSV format data you want to push out to the spreadsheet.(Required. Default : None.)")
 
     args = parser.parse_args()
-    
-    if args.gauth is None and args.google_PWD is None and args.client_email is not None :
-        print 'You need a password :  -up xxxxxxx'
-        exit(-1)
     
        
     now =       NameSpace({

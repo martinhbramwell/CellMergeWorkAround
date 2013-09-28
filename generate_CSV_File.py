@@ -21,6 +21,7 @@ except ImportError :
 
 try :
     import gspread
+    from gspread import googoauth
     
 except ImportError :
 
@@ -31,7 +32,6 @@ except ImportError :
 import getGauth
 import getSpans
 import getBorders
-#import putResult
 
 import os
 import math
@@ -40,10 +40,6 @@ import urllib2
 
 def pushBackToSpreadsheet(credentials, workbook_key, sheet_name, patchData) :
 
-    print ' --   --   --   --   --   --   --   --   --   --   --   --   --  '
-    print credentials
-    print workbook_key
-    print sheet_name
 
     # Hook up to Google Spreadsheet stream.
     conn = gspread.connect(credentials)
@@ -192,18 +188,29 @@ def downloadToFile(url, filename):
     return open(file)
     
 
-def getConnectionHeader(gauth, google_UID, google_PWD, google_service):
 
-    if gauth is not None:
-        google_authorization_key = gauth
-    else:
-        google_authorization_key = getGauth.getGoogleAuthorizationKey(
-                 google_service
-               , google_UID
-               , google_PWD
-            )
+def getConnectionHeader(credentials, url):
+
+    oauth_tokens = googoauth.get_auth_tokens(credentials)
+    
+    triesLimit = 5
+    tries = triesLimit
+    while tries > 0 :
+        header = {"Authorization": 'Bearer %s' % oauth_tokens.access_token}
+        try :
+            something = urllib2.urlopen(urllib2.Request(url, headers=header)).read()
+            return header
             
-    return {"Authorization": "GoogleLogin auth=" + google_authorization_key}
+        except :
+            googoauth.erase_access_token(credentials)
+            oauth_tokens = googoauth.refreshToken()
+
+        if tries < triesLimit :
+            time.sleep(6)
+            print 'Trying again to refresh.  {} tries remain.'.format(tries)
+        tries -= 1
+
+    return header
 
 
 def main():
@@ -217,16 +224,19 @@ def main():
         return "Found no sheet ID to use."
 
     
-    header = getConnectionHeader(args.gauth, args.user_email, args.google_PWD, args.google_service)
-    
-
     url_part  = "https://docs.google.com/feeds/download/spreadsheets/Export?exportFormat=html"
     url_part += "&key=" + args.workbook_key
+    url_part += "&gid="
+
+    
+    header = getConnectionHeader(credentials, url_part + "0")
+
 
     dictCells = {}
     for sheet_id in args.sheet_ids.split(','):
 
-        request = urllib2.Request(url_part + "&gid=" + str(sheet_id), headers=header)
+        the_url = url_part + str(sheet_id)
+        request = urllib2.Request(the_url, headers=header)
 
         html_file = downloadToFile(request, "temporary.html")
 
@@ -248,12 +258,11 @@ def main():
 if __name__ == "__main__":
 
     result = main()
-#    print result
 	
 '''	
 
 Example :
 
-./generate_CSV_File.py -ssk 0AhgdNB3-bSxAdDFBQWJ3YTAzd015UFJTZ3FwZlc1TlE -si 2 -ue doowa.diddee@gmail.com -cs 'Zis38NZ_wyBII2Q9xfMRthW-' -ci 204618981389-fod7457tdhtfvmglt287dg7p30579r0l.apps.googleusercontent.com -am ForDevices -ce alicia.factorepo@gmail.com -up 99xxoozz  -il meta_patches meta_patches.csv
+ ./generate_CSV_File.py -ssk 0Asxy-TdDgbjidEpmYVBXaHRUclRtalpHdkw0ek1Md2c -si 6 -ue doowa.diddee@gmail.com -cs 'Zis38NZ_wyBII2Q9xfMRthW-' -il meta_patches -ci 204618981389-fod7457tdhtfvmglt287dg7p30579r0l.apps.googleusercontent.com -am ForDevices -ce alicia.factorepo@gmail.com -sat 'ya29.AHES6ZQUvWvxxxxxxxxxxxxxXWe_0x-aNn6Bxxel9LNT1gv6wX4c1w' -srt '1/hO_TrQqxxxxxxxxxxxxxxxxxxxxxFnSJeVbhZUg9ZvE'
 
 '''
