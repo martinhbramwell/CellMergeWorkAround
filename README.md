@@ -40,9 +40,12 @@ You can use it to learn about screen scraping other people's spreadsheets :-)  :
 Preparation
 ------
 
-Let's get the dependencies out of the way:
+Let's get the dependencies out of the way.  You will need the Python Package Installer "pip", so do:
 
- 1 you will need the Python Package Installer "pip".  So do:  sudo apt-get install -y python-pip
+		sudo apt-get install -y python-pip
+		
+ 1 sudo pip install beautifulsoup4
+ 1 
  
 
 Obtain this project [  https://github.com/martinhbramwell/CellMergeWorkAround  ] and also this one [  https://github.com/martinhbramwell/gspread  ]
