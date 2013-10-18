@@ -52,19 +52,18 @@ You will have two directories like this :
            + - logs
            + - tests
 
-CellMergeWorkAround will not work without parts of gspread, so you need copy the gspread subdirectory into CellMergeWorkAround, so as to end up with this:
+CellMergeWorkAround will not work without parts of gspread, so you need to move the gspread subdirectory into CellMergeWorkAround, so as to end up with this:
 
     /-+
       + - CellMergeWorkAround
-           + - gspread
-      + - gspread
-          -+ - docs
-           + - gspread
-           + - logs
-           + - tests
+	      + - gspread
+	          -+ - docs
+	           + - gspread
+	           + - logs
+	           + - tests
 
 Also, you may want to be able to email your remote user to get them to tell Google your access attempts are authorized anmd should be permitted.
-Run the gspread/prepSMTP.py and retrieve the values from the foot of the file test_parms.py
+Run the CellMergeWorkAround/gspread/prepSMTP.py and retrieve the values from the foot of the file test_parms.py
 
 
 Usage
