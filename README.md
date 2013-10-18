@@ -40,6 +40,11 @@ You can use it to learn about screen scraping other people's spreadsheets :-)  :
 Preparation
 ------
 
+Let's get the dependencies out of the way:
+
+ 1 you will need the Python Package Installer "pip".  So do:  sudo apt-get install -y python-pip
+ 
+
 Obtain this project [  https://github.com/martinhbramwell/CellMergeWorkAround  ] and also this one [  https://github.com/martinhbramwell/gspread  ]
 
 You will have two directories like this :
