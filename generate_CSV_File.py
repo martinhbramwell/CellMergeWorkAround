@@ -26,7 +26,7 @@ try :
 except ImportError :
 
     github_url = 'https://github.com/martinhbramwell/gspread/tree/master/gspread'
-    print 'You need a sub-directory called "gspread", containing all the files liosted here:\n     %s' % github_url
+    print 'You need a sub-directory called "gspread", containing all the files listed here:\n     %s' % github_url
     exit(-1)
 
 import getGauth
@@ -39,7 +39,6 @@ import math
 import urllib2
 
 def pushBackToSpreadsheet(credentials, workbook_key, sheet_name, patchData) :
-
 
     # Hook up to Google Spreadsheet stream.
     conn = gspread.connect(credentials)
@@ -197,8 +196,10 @@ def getConnectionHeader(credentials, url):
     tries = triesLimit
     while tries > 0 :
         header = {"Authorization": 'Bearer %s' % oauth_tokens.access_token}
+        print 'Headr will be : %s.' % header
         try :
             something = urllib2.urlopen(urllib2.Request(url, headers=header)).read()
+            googoauth.reopen_store()
             return header
             
         except :
@@ -231,11 +232,14 @@ def main():
     
     header = getConnectionHeader(credentials, url_part + "0")
 
-
     dictCells = {}
     for sheet_id in args.sheet_ids.split(','):
 
         the_url = url_part + str(sheet_id)
+
+        print 'url : %s' % the_url
+        print 'header : %s' % header
+
         request = urllib2.Request(the_url, headers=header)
 
         html_file = downloadToFile(request, "temporary.html")
