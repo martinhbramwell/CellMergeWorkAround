@@ -1,3 +1,7 @@
+# 3rd party source code
+goauth2_helper.py
+gspread/
+
 *.py[cod]
 *.*~
 *.csv
@@ -22,6 +26,7 @@ lib64
 
 # Installer logs
 pip-log.txt
+logs/
 
 # Unit test / coverage reports
 .coverage
