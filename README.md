@@ -44,8 +44,8 @@ Let's get the dependencies out of the way.  You will need the Python Package Ins
 
 		sudo apt-get install -y python-pip
 		
- 1 sudo pip install beautifulsoup4
- 1 sudo pip install tinycss
+ 1. sudo pip install beautifulsoup4
+ 1. sudo pip install tinycss
  
 
 Obtain this project [  https://github.com/martinhbramwell/CellMergeWorkAround  ] and also this one [  https://github.com/martinhbramwell/gspread  ]
