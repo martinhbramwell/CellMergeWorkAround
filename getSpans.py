@@ -1,6 +1,7 @@
 #!/usr/bin/python
 #
-from BeautifulSoup import BeautifulSoup
+# from BeautifulSoup import BeautifulSoup
+from bs4 import BeautifulSoup
 
 spans_key = 'span'
 borders_key = 'brdr'

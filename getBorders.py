@@ -1,7 +1,8 @@
 #!/usr/bin/python
 #
+# from BeautifulSoup import BeautifulSoup
+from bs4 import BeautifulSoup
 
-from BeautifulSoup import BeautifulSoup
 import tinycss
 
 borders_key = 'brdr'
@@ -52,13 +53,13 @@ def getSheetCellBorders(dictCells, page, rules, sheet):
     soup = BeautifulSoup(page)
 
     table = soup.body.table
-            
+
     idxRow = 0
     cells = {}
     for row in table:
         idxCell = 0
         col = {}
-        foundInRow = False
+        foundInRow = False            
         for cell in row:
             sep = ''
             for attr, value in cell.attrs:
