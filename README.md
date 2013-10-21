@@ -55,8 +55,10 @@ You will have two directories like this :
     /-+
       + - CellMergeWorkAround
       + - gspread
-          -+ - docs
+           + - docs
            + - gspread
+                + - googauth.py
+                + - etc, etc
            + - logs
            + - tests
 
@@ -65,11 +67,15 @@ CellMergeWorkAround will not work without parts of gspread, so you need to copy 
     /-+
       + - CellMergeWorkAround
            + - gspread
+                + - googauth.py
+                + - etc, etc
       + - gspread
-          -+ - docs
+           + - docs
            + - gspread
-           + - logs
-           + - tests
+                + - googauth.py
+                + - etc, etc
+         + - logs
+         + - tests
 
 Also, you may want to be able to email your remote user to get them to tell Google your access attempts are authorized anmd should be permitted.
 Run the CellMergeWorkAround/gspread/prepSMTP.py and retrieve the values from the foot of the file test_parms.py
